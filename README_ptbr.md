@@ -31,7 +31,7 @@ copy /b love.exe+inasgame.love inas.exe
 
 Mais informações sobre como compilar para outras plataformas na [wiki do LÖVE](https://love2d.org/wiki/Game_Distribution). Algumas mudanças no código podem ser necessárias para torná-lo compatível com todas as plataformas.
 
-# Credits
+# Créditos
 
 Programação: [FloatingBanana](https://gamejolt.com/@FloatingBanana)
 Modelagem: [Th3 Atomic](https://gamejolt.com/@Th3_Atomic_Official)
