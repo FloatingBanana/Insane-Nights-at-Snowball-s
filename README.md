@@ -35,6 +35,9 @@ More information about compiling for other platforms in the [LÖVE wiki](https:/
 
 # Credits
 
+Programming: [FloatingBanana](https://gamejolt.com/@FloatingBanana)
+Modelling: [Th3 Atomic](https://gamejolt.com/@Th3_Atomic_Official)
+
 ##### Libraries
 
 * [Bump.lua](https://github.com/kikito/bump.lua)
