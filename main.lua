@@ -316,21 +316,13 @@ function love.load(args)
 	resConf.aspectRatio = savedata.wide
 	trophies:loadAchieved()
 
-	if isMobile then
-		dbg.blur_type = "Fast gaussian blur"
-
-		blur = moonshine(moonshine.effects.fastgaussianblur)
-		blur.fastgaussianblur.taps = dbg.fastgaussian_taps
-		blur.fastgaussianblur.offset = dbg.fastgaussian_offset
-		blur.fastgaussianblur.sigma = dbg.fastgaussian_sigma
-	end
-
 	glang = languages[langNumber]
 	
 	-- ANCHOR Gamejolt stuff (please don't steal)
 	local keys = require("apikeys")
 	gamejolt.init(keys.gj_id, keys.gj_key, args)
 
+	--Discord Rich Presence
 	if rpc then
 		rpc.initialize(keys.rpc_id, true)
 	end
@@ -350,42 +342,48 @@ end
 
 function love.draw()
 	gamestates[currGamestate]:draw()
-	lg.setColor(1,1,1,1)
+	lg.setColor(1, 1, 1, 1)
 	subtitle:draw()
 	
 	if fdalpha > 0 then
 		if fdin then
-			lg.setColor(0,0,0,1 - fdalpha)
+			lg.setColor(0, 0, 0, 1 - fdalpha)
 		else
-			lg.setColor(0,0,0,fdalpha)
+			lg.setColor(0, 0, 0, fdalpha)
 		end
+
 		lg.rectangle("fill", 0, 0, wWidth, wHeight)
-		lg.setColor(1,1,1,1)
+		lg.setColor(1, 1, 1, 1)
 	end
+
 	dialog.draw()
 	trophies:draw()
 
 	-- ANCHOR Draw debug menu
 	if showdebugmenu then
 		if debugmenu.focus then
-			lg.setColor(0,0,0,.2)
+			lg.setColor(0, 0, 0, 0.2)
 			lg.rectangle("fill", 0, 0, 1000, 675)
-			lg.setColor(1,1,1,1)
+			lg.setColor(1, 1, 1, 1)
 		end
+
 		lg.push()
 		lg.origin()
 		lg.setLineWidth(1)
+
 		debugmenu.draw()
+
 		lg.pop()
 
 		lg.setLineWidth(1)
-		lg.setColor(1,1,1,1)
+		lg.setColor(1, 1, 1, 1)
 		setFont()
+
 		fpsgraph.drawGraphs(graphs)
 		
 		local stats = "Graphic stats:"
 		local sinfo = lg.getStats()
-		sinfo.texturememory = lume.round(sinfo.texturememory / 1024 / 1024, .01).." MB"
+		sinfo.texturememory = lume.round(sinfo.texturememory / 1024 / 1024, 0.01).." MB"
 		
 		for k, v in pairs(sinfo) do
 			stats = stats.."\n"..k..": "..v
@@ -461,6 +459,7 @@ function clearResources()
 			recicleTable(t)
 		end
 	end
+
 	lume.clear(res)
 	
 	resourcecleared = true
@@ -475,6 +474,7 @@ function simulplay(data, x, vol, pitch)
 		sound:setRelative(true)
 		sound:setPosition(x,0,0)
 	end
+
 	sound:setVolume(vol or .3)
 	sound:setPitch(pitch or 1)
 	sound:play()
@@ -486,12 +486,15 @@ function string.explode(str, div, plain)
 	local o = emptyTable()
 	while true do
 		local pos1,pos2 = str:find(div, 1, plain)
+
 		if not pos1 then
 			o[#o+1] = str
 			break
 		end
+
 		o[#o+1],str = str:sub(1,pos1-1),str:sub(pos2+1)
 	end
+
 	return o
 end
 
@@ -502,8 +505,10 @@ realsavedata = {}
 savedata = setmetatable({}, {
 	__newindex = function(_, k, v)
 		realsavedata[k] = v
+
 		savegame({[k] = v})
 	end,
+
 	__index = function(_, k)
 		return realsavedata[k]
 	end
@@ -542,7 +547,7 @@ function log_err(message, text)
 		os.execute("explorer "..lfs.getSaveDirectory():gsub("/", "\\").."\\error.txt")
 	end}
 	
-	dialog(message, {"OK"}, {glang.quit, love.event.quit}, boolto(isMobile, nil, vlbutton))
+	dialog(message, {"OK"}, {glang.quit, love.event.quit}, boolto(OS == "Windows", nil, vlbutton))
 	
 	local date = os.date("\r\n\r\n%x %X - ")
 	local file = ""
@@ -629,6 +634,7 @@ function love.keypressed(k, unicode)
 			lm.setCursor()
 		end
 	end
+
 	if showdebugmenu and debugmenu.focus then
 		return
 	end
