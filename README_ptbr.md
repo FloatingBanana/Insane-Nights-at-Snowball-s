@@ -64,4 +64,4 @@ Modelagem: [Th3 Atomic](https://gamejolt.com/@Th3_Atomic_Official)
 
 # Licensa
 
-Este projeto está publicado sob a licensa MIT.
+Este projeto está publicado sob a licensa Zlib.
