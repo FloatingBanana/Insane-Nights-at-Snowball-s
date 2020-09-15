@@ -36,6 +36,7 @@ function love.run()
  
 			love.graphics.present()
 		end
+		
         local end_time = love.timer.getTime()
         local frame_time = end_time - start_time
 
